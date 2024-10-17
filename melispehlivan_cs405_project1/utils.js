@@ -161,33 +161,33 @@ function getChatGPTModelViewMatrix() {
  * stated in transformation-prompt.txt
  */
 function getModelViewMatrix() {
-    // Açıları radyan cinsine çevirme
-    const radianX = (30 * Math.PI) / 180;  // 30 dereceyi radyana çevirme
-    const radianY = (45 * Math.PI) / 180;  // 45 dereceyi radyana çevirme
-    const radianZ = (60 * Math.PI) / 180;  // 60 dereceyi radyana çevirme
+    
+    const radianX = (30 * Math.PI) / 180;  
+    const radianY = (45 * Math.PI) / 180;  
+    const radianZ = (60 * Math.PI) / 180;  
 
-    // Dönüşüm matrislerini oluşturma
+   
     const rotationXMatrix = createRotationMatrix_X(radianX);
     const rotationYMatrix = createRotationMatrix_Y(radianY);
     const rotationZMatrix = createRotationMatrix_Z(radianZ);
 
-    // 1. Kimlik matrisi oluşturma (başlangıç matrisi)
-    let modelViewMatrix = createIdentityMatrix();  // Başlangıç matrisi
+    
+    let modelViewMatrix = createIdentityMatrix();  
 
-    // Adım 1: Rotasyonları uygulama (Z, Y, X sırasıyla)
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationZMatrix); // Z ekseninde dönüş
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationYMatrix); // Y ekseninde dönüş
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationXMatrix); // X ekseninde dönüş
+    
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationZMatrix); 
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationYMatrix); 
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationXMatrix);
 
-    // Adım 2: Ölçeklendirme matrisi oluşturma ve uygulama (X ve Y ekseninde 0.5, Z ekseninde 1)
+    
     const scaleMatrix = createScaleMatrix(0.5, 0.5, 1);
     modelViewMatrix = multiplyMatrices(modelViewMatrix, scaleMatrix);
 
-    // Adım 3: Yer değiştirme matrisi oluşturma ve uygulama (X ekseninde 0.3, Y ekseninde -0.25, Z ekseninde 0)
+    
     const translationMatrix = createTranslationMatrix(0.3, -0.25, 0);
     modelViewMatrix = multiplyMatrices(modelViewMatrix, translationMatrix);
 
-    // Son adım: Model görünüm matrisini Float32Array olarak döndürme
+    
     return new Float32Array(modelViewMatrix);
 }
 
